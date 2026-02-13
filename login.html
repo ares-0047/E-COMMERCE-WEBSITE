@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Arora</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth-animate.css">
+    <link rel="stylesheet" href="responsive.css"> 
+</head>
+<body class="auth-body">
+
+    <div class="animated-grid-bg"></div>
+
+    <div class="auth-container entrance-anim">
+        <div class="form-wrapper" id="login-box">
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Enter your credentials to access your account.</p>
+            
+            <form id="login-form">
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="login-email" required placeholder="name@example.com">
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="login-pass" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn-primary btn-block">Sign In</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Don't have an account? <span onclick="toggleAuth()">Sign Up</span></p>
+                <a href="index.html" class="back-link">← Back to Shop</a>
+            </div>
+        </div>
+
+        <div class="form-wrapper hidden" id="signup-box">
+            <h2>Create Account</h2>
+            <p class="subtitle">Join Arora for exclusive offers.</p>
+            
+            <form id="signup-form">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="reg-name" required placeholder="Ashutosh">
+                </div>
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="reg-email" required placeholder="name@example.com">
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="reg-pass" required placeholder="Create a password">
+                </div>
+                <button type="submit" class="btn-primary btn-block">Create Account</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <span onclick="toggleAuth()">Sign In</span></p>
+                <a href="index.html" class="back-link">← Back to Shop</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>

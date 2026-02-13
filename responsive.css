@@ -1,0 +1,99 @@
+/* css/responsive.css */
+
+/* --- TABLET & MOBILE (Max Width 768px) --- */
+@media (max-width: 768px) {
+    
+    /* 1. Navbar: Stack Search Bar below Logo & Icons */
+    .navbar {
+        flex-wrap: wrap;
+        gap: 15px; /* Add space between rows */
+        padding-bottom: 10px;
+    }
+
+    .logo {
+        order: 1; /* First */
+        flex: 1; /* Take up left space */
+    }
+
+    .nav-icons {
+        order: 2; /* Second (Right side) */
+    }
+
+    .search-bar {
+        order: 3; /* Third (New Row) */
+        width: 100%; /* Full width */
+        margin: 0;
+    }
+
+    /* 2. Hero Section: Reduce Height */
+    .hero {
+        height: 250px; /* Smaller banner for mobile */
+        text-align: center;
+    }
+    .hero-content h2 { font-size: 1.8rem; }
+
+    /* 3. Filters: Horizontal Scroll (Swipeable Chips) */
+    .filters {
+        display: flex;
+        overflow-x: auto; /* Enable swipe */
+        white-space: nowrap;
+        padding-bottom: 10px; /* Space for scrollbar */
+        -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    /* Hide ugly scrollbar but keep functionality */
+    .filters::-webkit-scrollbar { display: none; } 
+    .filters { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .filter-btn {
+        flex: 0 0 auto; /* Don't shrink buttons */
+        margin-right: 10px;
+    }
+
+    .controls {
+        flex-direction: column; /* Stack filters and sort dropdown */
+        align-items: flex-start;
+        gap: 10px;
+    }
+    #sort-select { width: 100%; }
+
+    /* 4. Cart Sidebar: Full Width */
+    .cart-sidebar {
+        width: 100%; /* Full screen width on mobile */
+        right: -100%; /* Fully hidden */
+    }
+    .cart-overlay.open .cart-sidebar {
+        right: 0;
+    }
+}
+
+/* --- SMALL MOBILE (Max Width 480px) --- */
+@media (max-width: 480px) {
+    
+    .container { padding: 0 15px; }
+
+    /* Adjust Product Grid to 1 column or small 2 column */
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* 2 per row on small phones */
+        gap: 1rem;
+    }
+    
+    /* Make product cards more compact */
+    .card-image { height: 160px; }
+    .card-title { font-size: 1rem; }
+    .card-price { font-size: 1.1rem; }
+    .add-to-cart-btn { padding: 10px; font-size: 0.9rem; }
+
+    /* Modals */
+    .modal-content {
+        width: 95%; /* Use almost full screen width */
+    }
+    
+    /* Login Page */
+    .auth-container {
+        padding: 1.5rem;
+        width: 90%; 
+    }
+}

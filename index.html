@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arora | An E-Commerce</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="chatbot.css">
+</head>
+<body>
+
+    <header id="header">
+         <nav class="navbar container">
+            <div class="logo">
+                <h1>Arora<span>.</span></h1>
+            </div>
+            
+            <div class="search-bar">
+               <input type="text" id="search-input" placeholder="Search for products...">
+               <button><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+
+            <div class="nav-icons">
+                <a href="admin.html" class="icon-wrapper" title="Go to Admin Panel" style="color: inherit; text-decoration: none;">
+                    <i class="fa-solid fa-lock"></i>
+                </a>
+
+                <div class="icon-wrapper" onclick="openTrackModal()" title="Track Order">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+                
+                <div class="icon-wrapper cart-trigger" onclick="toggleCart()">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span id="cart-count">0</span>
+                </div>
+
+                <div class="icon-wrapper" id="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </div>
+
+                <div class="icon-wrapper" id="auth-btn" onclick="handleAuthClick()">
+                    <i class="fa-regular fa-user"></i>
+                    <span id="user-greeting" style="font-size: 0.8rem; margin-left:5px;"></span>
+                </div>   
+            </div>
+         </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content container">
+            <h2>Premium Collection 2026</h2>
+            <p>Fits you like, we make</p>
+            <button class="btn-primary">Shop Now</button>
+        </div>
+    </section>
+
+    <section class="controls container">
+        <div class="filters">
+            <button class="filter-btn active" data-category="all">All</button>    
+            <button class="filter-btn" data-category="fashion">Fashion</button>
+        </div>
+        <select id="sort-select">
+            <option value="default">Sort By</option>
+            <option value="low-high">Price: Low to High</option>
+            <option value="high-low">Price: High to Low</option>
+        </select>
+    </section>
+
+    <main class="container">
+        <div id="product-grid" class="product-grid"></div>
+    </main>
+
+    <div class="cart-overlay" id="cart-overlay">
+        <div class="cart-sidebar">
+            <div class="cart-header">
+                <h3>Your Cart</h3>
+                <span class="close-cart" onclick="toggleCart()">&times;</span>
+            </div>
+            
+            <div class="cart-items" id="cart-items">
+                </div>
+
+            <div class="cart-footer">
+                <div class="coupon-box">
+                    <input type="text" id="coupon-input" placeholder="Coupon Code (e.g. SAVE10)">
+                    <button onclick="applyCoupon()">Apply</button>
+                </div>
+                <p id="coupon-msg" class="coupon-msg"></p>
+
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="cart-subtotal">$0.00</span>
+                    </div>
+                    <div class="summary-row discount hidden" id="discount-row">
+                        <span>Discount:</span>
+                        <span id="cart-discount">-$0.00</span>
+                    </div>
+                    <div class="total">
+                        <span>Total:</span>
+                        <span id="cart-total">$0.00</span>
+                    </div>
+                </div>
+
+                <button class="btn-primary btn-block" onclick="openCheckout()">Proceed to Buy</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="checkout-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Checkout</h3>
+                <span class="close-modal" onclick="closeCheckout()">&times;</span>
+            </div>
+            
+            <div class="checkout-body">
+                <div class="checkout-section">
+                    <h4>Order Summary</h4>
+                    <div class="checkout-total">
+                        <span>Total Amount:</span>
+                        <span id="checkout-final-total">$0.00</span>
+                    </div>
+                </div>
+
+                <div class="checkout-section">
+                    <h4>Select Payment Method</h4>
+                    <form id="payment-form">
+                        <div class="payment-options">
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="card">
+                                <span class="option-card">
+                                    <i class="fa-regular fa-credit-card"></i> Card
+                                </span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="upi" checked>
+                                <span class="option-card">
+                                    <i class="fa-solid fa-mobile-screen-button"></i> UPI
+                                </span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="cod">
+                                <span class="option-card">
+                                    <i class="fa-solid fa-money-bill-wave"></i> Cash
+                                </span>
+                            </label>
+                        </div>
+
+                        <div id="upi-section" class="payment-details">
+                            <label>Enter UPI ID</label>
+                            <input type="text" id="upi-id" placeholder="username@bank" required>
+                            <p class="hint">Examples: alex@ptsbi, 9876543210@paytm</p>
+                        </div>
+
+                        <div id="card-section" class="payment-details hidden">
+                            <input type="text" placeholder="Card Number" maxlength="16">
+                            <div class="card-grid">
+                                <input type="text" placeholder="MM/YY" maxlength="5">
+                                <input type="text" placeholder="CVV" maxlength="3">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary btn-block">Pay Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="track-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Track Your Order</h3>
+                <span class="close-modal" onclick="closeTrackModal()">&times;</span>
+            </div>
+            <div class="checkout-body">
+                <div class="track-search">
+                    <input type="text" id="track-id-input" placeholder="Enter Order ID (e.g., ORD544)">
+                    <button class="btn-primary" onclick="trackOrder()">Track</button>
+                </div>
+                
+                <div id="track-result" class="track-result hidden">
+                    <div class="order-meta">
+                        <h4 id="res-id">Order ORD000</h4>
+                        <span id="res-date">Oct 12, 2026</span>
+                    </div>
+                    
+                    <div class="timeline">
+                        <div class="step active">
+                            <div class="circle"><i class="fa-solid fa-check"></i></div>
+                            <p>Placed</p>
+                        </div>
+                        <div class="step" id="step-packed">
+                            <div class="circle"><i class="fa-solid fa-box"></i></div>
+                            <p>Packed</p>
+                        </div>
+                        <div class="step" id="step-shipped">
+                            <div class="circle"><i class="fa-solid fa-truck"></i></div>
+                            <p>Shipped</p>
+                        </div>
+                        <div class="step" id="step-delivered">
+                            <div class="circle"><i class="fa-solid fa-house"></i></div>
+                            <p>Delivered</p>
+                        </div>
+                    </div>
+
+                    <div class="order-items-summary" id="track-items-list"></div>
+                </div>
+                
+                <div id="track-error" class="hidden" style="color: red; text-align: center; margin-top: 10px;">
+                    Order ID not found.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="chat-toggle-btn" onclick="toggleChat()">
+        <i class="fa-solid fa-comments"></i>
+    </button>
+
+    <div class="chat-window" id="chat-window">
+        <div class="chat-header">
+            <h3>Arora Support Assistant</h3>
+            <button class="close-chat" onclick="toggleChat()">&times;</button>
+        </div>
+        
+        <div class="chat-messages" id="chat-messages"></div>
+
+        <div class="typing-indicator" id="typing-indicator">Arora Bot is typing...</div>
+
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Type a message..." onkeypress="handleEnter(event)">
+            <button onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <footer class="container">
+        <p style="text-align: center; color: #6b7280; padding: 20px 0; margin-top: 40px; border-top: 1px solid #eee;">
+            &copy; 2026 Arora E-Commerce. Production Ready Demo.
+        </p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+    <script src="chatbot.js"></script> 
+</body>
+</html>
